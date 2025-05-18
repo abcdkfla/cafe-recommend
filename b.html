@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <title>카페 추천 결과</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 40px;
+      background-color: #f8f8f8;
+      color: #333;
+    }
+    h1 {
+      margin-bottom: 30px;
+    }
+    .result {
+      font-size: 18px;
+      background: #fff;
+      padding: 20px;
+      border-radius: 15px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    .no-data {
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>추천 결과</h1>
+  <div id="result" class="result"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const age = params.get("age");
+    const mood = params.get("mood");
+    const purpose = params.get("purpose");
+
+    const data = {
+      "10대_조용한_공부": ["조용한 책방 카페", "미드나잇 라운지", "스페이스 커먼즈"],
+      "20대_트렌디한_사진찍기": ["핫플 카페모카", "네온브루", "무드앤크림"],
+      "30대_감성적인_혼자 시간 보내기": ["레트로무드", "바닐라휴", "쉼표카페"]
+    };
+
+    const key = `${age}_${mood}_${purpose}`;
+    const resultDiv = document.getElementById("result");
+
+    if (data[key]) {
+      const list = data[key].map(cafe => `<li>${cafe}</li>`).join("");
+      resultDiv.innerHTML = `<p><strong>${age}, ${mood}, ${purpose}</strong>에 어울리는 추천 카페 TOP 3:</p><ul>${list}</ul>`;
+    } else {
+      resultDiv.innerHTML = `<p class="no-data">해당 조건에 맞는 추천 데이터가 아직 없습니다.</p>`;
+    }
+  </script>
+
+</body>
+</html>
